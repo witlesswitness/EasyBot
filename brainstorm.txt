@@ -8,6 +8,8 @@ Veer input:
 	need server environment that can handle multiple machines.
 	design the pieces (how will server work, UI from attacker)
 	
+		Service hosts a webpage that the bots periodically scan to receive commands associated with their ID
+	
 	look up beaconing, stealth, way to push out commands to clients, socket programming,
 	higher level libraries that can accept connections or set up python server
 	
