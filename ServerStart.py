@@ -40,11 +40,12 @@ class MyServer(BaseHTTPRequestHandler):
 def directoryhandler():
     home = os.getcwd()
     dir = os.path.join('./','server')
+    botname = "0"+"\n"
     if not os.path.exists(dir):
         os.mkdir(dir)
         os.chdir(dir)
         f = open('botnames.txt', 'w+')
-        f.write('0')
+        f.write(botname)
         f.close()
         f = open('instructions.txt', 'w+')
         f.write('')
