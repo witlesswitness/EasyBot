@@ -4,6 +4,7 @@ from io import BytesIO
 import time
 import logging
 import os
+import editbotname
 
 hostName = "0.0.0.0"
 serverPort = 8080
@@ -37,6 +38,7 @@ class MyServer(BaseHTTPRequestHandler):
         response.write(b'Received: ')
         response.write(body + b'\n')
         self.wfile.write(response.getvalue())
+        editbotname.main()
 def directoryhandler():
     dir = os.path.join('./','server')
     if not os.path.exists(dir):
