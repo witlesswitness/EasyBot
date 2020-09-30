@@ -5,7 +5,7 @@ import os
 
 def pull_botnames_inlogs():
     
-    with open('/home/kali/project/webserver/directory/logs.txt') as input_file:
+    with open('./server/logs.txt') as input_file:
         bots = []
         for line in input_file:
             # print(line)
@@ -22,7 +22,7 @@ def checkname(l1):
         # print(item)
         counter = 0
         command = ''
-        with open('/home/kali/project/webserver/directory/botnames.txt') as input_file:
+        with open('./server/botnames.txt') as input_file:
             
             for line in input_file:
                 if line.strip() == item.strip():
@@ -30,7 +30,7 @@ def checkname(l1):
                 else:
                     counter +=0
             if counter == 0:
-                command = 'echo ' + item + ' >> /home/kali/project/webserver/directory/botnames.txt'
+                command = 'echo ' + item + ' >> ./server/botnames.txt'
                 os.system(command)
 
 def main():
