@@ -56,7 +56,7 @@ def directoryhandler():
 if __name__ == "__main__":
     directoryhandler()
     webServer = HTTPServer((hostName, serverPort), MyServer)
-    logging.basicConfig(filename=('./server/logs.txt/logs.txt'), format='%(message)s', level=logging.INFO)
+    logging.basicConfig(filename=('./server/logs.txt'), format='%(message)s', level=logging.INFO)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
     try:
