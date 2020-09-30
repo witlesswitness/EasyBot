@@ -38,6 +38,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(response.getvalue())
         editbotname.main()
 def directoryhandler():
+    home = os.getcwd()
     dir = os.path.join('./','server')
     if not os.path.exists(dir):
         os.mkdir(dir)
@@ -51,6 +52,7 @@ def directoryhandler():
         f = open('logs.txt', 'w+')
         f.write('')
         f.close()
+        os.chdir(home)
 if __name__ == "__main__":
     directoryhandler()
     webServer = HTTPServer((hostName, serverPort), MyServer)
