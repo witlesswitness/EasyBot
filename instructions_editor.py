@@ -8,7 +8,7 @@ def help_me():
     os.system(dothis)
 
 def clear():
-    dothis = "echo -n '' > /home/kali/project/webserver/directory/instructions.txt"
+    dothis = "echo -n '' > ./server/instructions.txt"
     # return(dothis)
     os.system(dothis)
     
@@ -25,7 +25,7 @@ def replace_commands(s1,s2):
             # print(commands[counter])
             instructions.append(f'{item} {command}')
     directions = ('\n'.join(instructions))
-    dothis = "echo " + "'" + directions + "'" + " > /home/kali/project/webserver/directory/instructions.txt"
+    dothis = "echo " + "'" + directions + "'" + " > ./server/instructions.txt"
     # return(dothis)
     os.system(dothis)
     # return(directions)
@@ -42,7 +42,7 @@ def append_commands(s1,s2):
             # print(commands[counter])
             instructions.append(f"{item} {command}")
     directions = ('\n'.join(instructions))
-    dothis = "echo " + "'" + directions + "'" + " >> /home/kali/project/webserver/directory/instructions.txt"
+    dothis = "echo " + "'" + directions + "'" + " >> ./server/instructions.txt"
     # return(dothis)
     os.system(dothis)
     
