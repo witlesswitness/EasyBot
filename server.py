@@ -11,10 +11,8 @@ serverPort = 8080
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        
-        pathnew = ''
+       
         pathnew = self.path
-        newpath = ''
         newpath = ('./server/'+pathnew)
         if pathnew == '/favicon.ico':
             pass
