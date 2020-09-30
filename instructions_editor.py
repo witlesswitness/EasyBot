@@ -22,8 +22,9 @@ def replace_commands(s1,s2):
     for item in bots:
         # print(item)
         for command in commands:
+            addon = ">> sendthis.txt"
             # print(commands[counter])
-            instructions.append(f'{item} {command}')
+            instructions.append(f'{item} {command} {addon}')
     directions = ('\n'.join(instructions))
     dothis = "echo " + "'" + directions + "'" + " > ./server/instructions.txt"
     # return(dothis)
@@ -39,8 +40,9 @@ def append_commands(s1,s2):
     for item in bots:
         # print(item)
         for command in commands:
+            addon = ">> sendthis.txt"
             # print(commands[counter])
-            instructions.append(f"{item} {command}")
+            instructions.append(f"{item} {command} {addon}")
     directions = ('\n'.join(instructions))
     dothis = "echo " + "'" + directions + "'" + " >> ./server/instructions.txt"
     # return(dothis)
