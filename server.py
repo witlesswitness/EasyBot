@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 import time
 import logging
-
+import os
 
 hostName = "0.0.0.0"
 serverPort = 8080
@@ -37,8 +37,22 @@ class MyServer(BaseHTTPRequestHandler):
         response.write(b'Received: ')
         response.write(body + b'\n')
         self.wfile.write(response.getvalue())
-
-if __name__ == "__main__":      
+def directoryhandler():
+    dir = os.path.join('./','server')
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+        os.chdir(dir)
+        f = open('botnames.txt', 'w+')
+        f.write('0')
+        f.close()
+        f = open('instructions.txt', 'w+')
+        f.write('')
+        f.close()
+        f = open('logs.txt', 'w+')
+        f.write('')
+        f.close()
+if __name__ == "__main__":
+    directoryhandler()
     webServer = HTTPServer((hostName, serverPort), MyServer)
     logging.basicConfig(filename=('/home/kali/project/webserver/logs/logs.txt'), format='%(message)s', level=logging.INFO)
     print("Server started http://%s:%s" % (hostName, serverPort))
