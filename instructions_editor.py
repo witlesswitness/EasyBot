@@ -54,11 +54,6 @@ def append_commands(s1,s2):
 
 if __name__ == '__main__':
     do_what = sys.argv[1]
-    # print(do_what)
-    bots = sys.argv[2]
-    # print(bots)
-    commands = sys.argv[3]
-    # print(commands)
 
     if do_what == 'replace':
         bots = sys.argv[2]
