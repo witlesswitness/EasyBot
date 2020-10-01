@@ -68,7 +68,11 @@ def main(s1,s2,s3):
 if __name__ == '__main__':
     
     do_what = sys.argv[1]
-    bots = sys.argv[2]
-    commands = sys.argv[3]
+    if do_what == 'clear':
+        bots = 0
+        commands = 0
+    if do_what != 'clear':
+        bots = sys.argv[2]
+        commands = sys.argv[3]
 
     main(do_what, bots, commands)
