@@ -66,12 +66,11 @@ def main(s1,s2,s3):
         help_me()
 
 if __name__ == '__main__':
-    
     do_what = sys.argv[1]
-    if do_what == 'clear':
+    if do_what == 'clear' or '-h' or '--help' :
         bots = 0
         commands = 0
-    if do_what != 'clear':
+    else:
         bots = sys.argv[2]
         commands = sys.argv[3]
 
