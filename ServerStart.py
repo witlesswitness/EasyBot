@@ -54,7 +54,8 @@ def directoryhandler():
         f.write('')
         f.close()
         os.chdir(home)
-if __name__ == "__main__":
+        
+def main():
     directoryhandler()
     webServer = HTTPServer((hostName, serverPort), MyServer)
     logging.basicConfig(filename=('./server/logs.txt'), format='%(message)s', level=logging.INFO)
@@ -67,3 +68,6 @@ if __name__ == "__main__":
 
     webServer.server_close()
     print("Server stopped.")
+if __name__ == "__main__":
+    main()
+    
