@@ -53,9 +53,11 @@ def append_commands(s1,s2):
     # return('\n'.join(instructions))
 
 def main(s1,s2,s3):
-    do_what = s1
-    bots = s2
-    commands = s3
+    do_what = str(s1)
+    bots = str(s2)
+    # print(bots)
+    commands = str(s3)
+    # print(commands)
     if do_what == 'replace':
         replace_commands(bots, commands)
     elif do_what == 'append':
@@ -67,11 +69,13 @@ def main(s1,s2,s3):
 
 if __name__ == '__main__':
     do_what = sys.argv[1]
-    if do_what == 'clear' or '-h' or '--help' :
+    if do_what == 'clear' or do_what == '-h' or do_what == '--help':
         bots = 0
         commands = 0
     else:
         bots = sys.argv[2]
+        # print(bots)
         commands = sys.argv[3]
+        # print(commands)
 
     main(do_what, bots, commands)
