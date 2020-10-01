@@ -97,7 +97,5 @@ if __name__ == '__main__':
 		cronjobs()
 		directoryhandler()
 		namecheck()
-	elif sys.argv[1] == 'beacon':
-		beacon()
 	elif sys.argv[1] == 'instructions':
 		instructions()
