@@ -27,7 +27,7 @@
     
     The `instructions()` function sends a GET request to `instructions.txt`.  If the machine finds instructions with `any` or its UID on the page, it will execute those instructions and send a time stamped output with its UID to the server.  If there are no instructions for the machine, then it will send a time-stamped message to the logs saying that it is online.  All GET and POST requests are documented on the serverside in `logs.txt`.
 
-## Notes:  
+#### Notes:  
 * In the GUI, the stop server button kills <b>all</b> running python processes on the host machine.
 
 * In lunchbox.py, replace the `{IP}` tag where it is present with the IP address of the machine hosting the server.
@@ -36,6 +36,6 @@
 
 
 
-**© 2020 Alex Harris and Charles Timmons**
+#### **© 2020 Alex Harris and Charles Timmons**
 
   *This is for educational purposes only.  Feel free to test this on your own network and change the code to fit your needs, but we do not condone this being used for any unauthorized or illegal activites.*
