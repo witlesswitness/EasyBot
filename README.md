@@ -1,8 +1,8 @@
 # LunchBot
 
-###This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.
+<h3>This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.</h3>
 
-##Contents
+<h2>Contents</h2>
 1. README.md
     You're here now.
 2. GUI.py
