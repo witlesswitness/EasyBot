@@ -1,4 +1,4 @@
-# LunchBot
+# EasyBot
 
 *This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.*
 
