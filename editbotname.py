@@ -8,8 +8,6 @@ def pull_botnames_inlogs():
     with open('./server/logs.txt') as input_file:
         bots = []
         for line in input_file:
-            # print(line)
-            # print(bots)
             section=line.strip().split()
             if len(section) >= 3:
                 if section[1] == '/botnames.txt':
@@ -19,7 +17,6 @@ def pull_botnames_inlogs():
 
 def checkname(l1):
     for item in l1:
-        # print(item)
         counter = 0
         command = ''
         with open('./server/botnames.txt') as input_file:
