@@ -22,7 +22,9 @@
 6. EasyBot.py
 
     This script reads the crontab and adds two cronjobs (if they aren't already present) that ensure that this script is ran every day at noon and that a function called `instructions()` is ran every minute.  It then creates a directory called `.bot` in the `/tmp` directory if it doesn't already exist.
+    
     A file called `name.txt` is written to the `.bot` directory.  The script checks the page `botnames.txt` and assigns itself a UID based on the last listed integer on the page.  For example if the last integer is 5, then the script will write 6 into the `name.txt` file.
+    
     The `instructions()` function sends a GET request to `instructions.txt`.  If the machine finds instructions with `any` or its UID on the page, it will execute those instructions and send a time stamped output with its UID to the server.  If there are no instructions for the machine, then it will send a time-stamped message to the logs saying that it is online.  All GET and POST requests are documented on the serverside in `logs.txt`.
 
 ##Notes:  In the GUI, the stop server button kills <b>all</b> running python processes on the host machine.
