@@ -1,11 +1,28 @@
 # LunchBot
 
-The project was an educational exercise in 
+###This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.
 
-This package contains both a Python executable that adds a Linux device to a botnet.  We also built a bot command server controlled by a GUI.
+##Contents
+1. README.md
+    You're here now.
+2. GUI.py
+    Running this both starts a python server on port 8080 and launches a graphic user interface to issue commands to "victim" machines.  Inputting the UID of a specific machine will instruct that machine.  Inputting `any` for the UID will instruct all active machines.
+3. Instructions_editor.py
+    Python script that the GUI calls to edit a file hosted on the server called `instructions.txt`.
+4. ServerStart.py
+    Python script that the GUI calls to launch the server.  This script also sets up a directory called `server` and pupulates them with the files `botnames.txt`, `logs.txt`, and `instructions.txt`.
+5. editbotname.py
+    ServerStart.py calls this script to maintain a roster of machines listed on `botnames.txt`.  The script updates the list as machines send a POST request to the server with their UID.
+6. lunchbot.py
+    This script reads the crontab and adds two cronjobs (if they aren't already present) that ensure that this script is ran every day at noon and that a function called `instructions()` is ran every minute.  It then creates a directory called `.bot` in the `/tmp` directory if it doesn't already exist.
+    A file called `name.txt` is written to the `.bot` directory.  The script checks the page `botnames.txt` and assigns itself a UID based on the last listed integer on the page.  For example if the last integer is 5, then the script will write 6 into the `name.txt` file.
+    The `instructions()` function sends a GET request to `instructions.txt`.  If the machine finds instructions with `any` or its UID on the page, it will execute those instructions and send a time stamped output with its UID to the server.  If there are no instructions for the machine, then it will send a time-stamped message to the logs saying that it is online.  All GET and POST requests are documented on the serverside in `logs.txt`.
 
-The GUI starts the server and sets up a directory that hosts the files necessary for its own operation and the operation of its bots.  The server posts the files on a webpage to allow easy communication and monitoring of all trafic.  The GUI allows the user to easily issue custom commands to the bots as a group or individually.  The server also maintains a roster of all the devices that have become part of the network so that new devices are able to name themselves.
 
-The victim side executable automatically creates a hidden directory for itself to work out of and edits the crontab.  The first time it is launched, it assigns itself a UID and sends that information to the server by comparing against previously assigned names hosted on the website.  It regularly checks to see if the server has commands for it by parsing the instructions page on the website for commands assigned to its UID.  When it has a command to run, it executes it on the command line and sends the output to the server log in a timestamped readable format.  If there are no commands, it sends a message to the server announcing that it is online.  The executable is written in such a way that no matter where it lives in the device, it will still function properly.
+##Notes:  In the GUI, the stop server button kills <b>all</b> running python processes on the host machine.
+          In lunchbox.py, replace the `{IP}` tag where it is present with the IP address of the machine hosting the server.
 
-##Note:  In the GUI, the stop server button kills <b>all</b> running python processes.
+
+
+<b>© 2020 Alex Harris and Charles Timmons</b>
+  <i>This is for educational purposes only.  Feel free to test this on your own network, but we do not condone this being used for any unauthorized or illegal activites.</i>
