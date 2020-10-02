@@ -1,6 +1,6 @@
 # LunchBot
 
-###H3This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.
+###This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.
 
 ##Contents
 
