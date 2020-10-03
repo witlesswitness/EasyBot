@@ -11,7 +11,7 @@ def main():
     canvas1 = tk.Canvas(root, width = 400, height = 400,  relief = 'raised')
     canvas1.pack()
 
-    label4 = tk.Label(root, text='LUNCHBOTS!')
+    label4 = tk.Label(root, text='EasyBot')
     label4.config(font=('helvetica', 20))
     canvas1.create_window(200, 40, window=label4)
 
