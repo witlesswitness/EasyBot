@@ -2,7 +2,7 @@
 
 *This project was an educational exercise for Fullstack Academy's Cyber Security Bootcamp.*
 
-Please see: https://youtu.be/DDlEXH1aIiU
+*Please visit:* https://youtu.be/DDlEXH1aIiU
 
 ## Contents
 
